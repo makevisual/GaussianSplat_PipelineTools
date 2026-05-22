@@ -64,39 +64,44 @@ fn gspipe_findNearestPly dir base padding ext target = (
 
 fn gspipe_updatePlySequences = (
     local curFrame = (currentTime as integer) / ticksPerFrame
-    local nodes = getclassinstances VRayGaussiansGeom
+--    local nodes = ( getclassinstances VRayGaussiansGeom )
+    local nodes = for n in objects where (classOf n) == VRayGaussiansGeom collect n
+
     for n in nodes do (
-        local enabledStr = toLower ((getUserProp n "gspipe_plyAnimationEnabled") as string)
-        if enabledStr == "true" do (
-            local seqPath = getUserProp n "gspipe_plySequencePath"
-            if seqPath != undefined and (seqPath as string) != "" do (
-                seqPath = seqPath as string
-                local offsetRaw = getUserProp n "gspipe_plyOffset"
-                local offset = if offsetRaw == undefined then 0 else (offsetRaw as integer)
-                if offset == undefined do offset = 0
+         local enabledStr = toLower ((getUserProp n "gspipe_plyAnimationEnabled") as string)
+         if enabledStr == "true" do (
+             local seqPath = getUserProp n "gspipe_plySequencePath"
+             if seqPath != undefined and (seqPath as string) != "" do (
+                 seqPath = seqPath as string
+                 local offsetRaw = getUserProp n "gspipe_plyOffset"
+                 local offset = if offsetRaw == undefined then 0 else (offsetRaw as integer)
+                 if offset == undefined do offset = 0
 
-                local missingStr = (getUserProp n "gspipe_plySequenceMissing") as string
-                if missingStr.count > 0 and (substring missingStr 1 1) == "#" do
-                    missingStr = substring missingStr 2 -1
-                local nearest = (toLower missingStr) == "nearest"
+                 local missingStr = (getUserProp n "gspipe_plySequenceMissing") as string
+                 if missingStr.count > 0 and (substring missingStr 1 1) == "#" do
+                     missingStr = substring missingStr 2 -1
+                 local nearest = (toLower missingStr) == "nearest"
 
-                local parsed = gspipe_parsePlySeqPath seqPath
-                if parsed == undefined then (
-                    format "[gspipe] %  unparseable plySequencePath: %\n" n.name seqPath
-                ) else (
-                    local dir = parsed[1]; local base = parsed[2]
-                    local padding = parsed[3]; local ext = parsed[4]
-                    local target = curFrame + offset
-                    local frameStr = formattedPrint target format:("%0" + (padding as string) + "d")
-                    local candidate = dir + base + "." + frameStr + ext
-                    local finalPath = if doesFileExist candidate then candidate
-                        else if nearest then (gspipe_findNearestPly dir base padding ext target)
-                        else ""
-                    format "[gspipe] %  ->  \"%\"\n" n.name finalPath
-                    n.file = finalPath
-                )
-            )
-        )
+                 local parsed = gspipe_parsePlySeqPath seqPath
+                 if parsed == undefined then (
+                     format "[gspipe] %  unparseable plySequencePath: %\n" n.name seqPath
+                 ) else (
+                     local dir = parsed[1]; local base = parsed[2]
+                     local padding = parsed[3]; local ext = parsed[4]
+                     local target = curFrame + offset
+                     local frameStr = formattedPrint target format:("%0" + (padding as string) + "d")
+                     local candidate = dir + base + "." + frameStr + ext
+                     local finalPath = if doesFileExist candidate then candidate
+                         else if nearest then (gspipe_findNearestPly dir base padding ext target)
+                         else ""
+                     format "[gspipe] %  ->  \"%\"\n" n.name finalPath
+                     n.file = finalPath
+                 )
+             )
+         )
     )
     ok
 )
+
+clearlistener()
+gspipe_updatePlySequences()
