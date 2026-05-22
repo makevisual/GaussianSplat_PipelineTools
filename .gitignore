@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 3dsMax / DCC junk
+*.bak
+*.max.bak
+*.autoback*
+
+# Selective heavy test-asset ignores
+# Uncomment / add patterns here when a dataset grows too big to track.
+# Keep manifest.yaml and expected/ tracked even when ignoring intermediate/.
+#
+# tests/assets/<scenario>/v<NNN>/intermediate/
+# tests/assets/<scenario>/v<NNN>/input/large_*
