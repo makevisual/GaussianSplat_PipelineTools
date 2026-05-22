@@ -64,7 +64,7 @@ fn gspipe_findNearestPly dir base padding ext target = (
 
 fn gspipe_updatePlySequences = (
     local curFrame = (currentTime as integer) / ticksPerFrame
-    local nodes = for n in objects where (classOf n) == VRayGaussiansGeom collect n
+    local nodes = getclassinstances VRayGaussiansGeom
     for n in nodes do (
         local enabledStr = toLower ((getUserProp n "gspipe_plyAnimationEnabled") as string)
         if enabledStr == "true" do (
