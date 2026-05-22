@@ -168,6 +168,11 @@ fn gspipe_plyTimeChangeHandler = gspipe_plyUpdate.run()
 
 struct gspipe_plyCallbackStruct (
     cbId = #gspipe_plySequence,
+    registered = false,
+
+    fn isRegistered = (
+        registered and gspipe_plyTimeCallbackRef != undefined
+    ),
 
     fn register = (
         callbacks.removeScripts id:cbId
@@ -179,6 +184,7 @@ struct gspipe_plyCallbackStruct (
         gspipe_plyTimeCallbackRef = gspipe_plyTimeChangeHandler
         registerTimeCallback gspipe_plyTimeCallbackRef
 
+        registered = true
         format "[gspipe] callbacks registered (id: %)\n" cbId
         ok
     ),
@@ -189,6 +195,7 @@ struct gspipe_plyCallbackStruct (
             unregisterTimeCallback gspipe_plyTimeCallbackRef
             gspipe_plyTimeCallbackRef = undefined
         )
+        registered = false
         format "[gspipe] callbacks unregistered (id: %)\n" cbId
         ok
     )

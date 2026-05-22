@@ -43,5 +43,12 @@ User-property contract (per node):
       `gspipe_plyCallback` defined before scenes load.
 - [ ] Macroscript wrapper for menu/toolbar invocation
       (`maxscript/macros/`).
-- [ ] Rollout UI for setting the user properties from inside Max
-      (`maxscript/ui/`).
+- [x] Rollout UI for setting the user properties from inside Max
+      (`maxscript/ui/gspipe_plySequenceEditor.ms`). dotNet DataGridView
+      listing every `VRayGaussiansGeom`, with per-row color status,
+      live frame readout (auto-refresh on time change), inline edits
+      for enabled/offset/missing, doubleclick-name selects in scene,
+      doubleclick-path opens a file picker, and global controls for
+      the quiet flag plus register/unregister/verify of
+      `gspipe_plyCallback`. Verification path added to
+      `gspipe_plySequence.ms` via `gspipe_plyCallback.isRegistered()`.
