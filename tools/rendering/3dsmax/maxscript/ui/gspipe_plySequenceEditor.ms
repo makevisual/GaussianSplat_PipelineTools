@@ -228,6 +228,10 @@ rollout gspipe_plySeqEditorRollout "Gspipe PLY Sequence Editor" width:760 height
         if gspipe_plyCallback == undefined then (
             lblCbState.text = "MISSING"
             lblCbState.foreColor = (color 200 60 60)
+        ) else if not (isProperty gspipe_plyCallback #isRegistered) then (
+            -- Older gspipe_plySequence.ms is loaded - re-fileIn that file.
+            lblCbState.text = "STALE (re-fileIn callback)"
+            lblCbState.foreColor = (color 230 160 60)
         ) else if gspipe_plyCallback.isRegistered() then (
             lblCbState.text = "REGISTERED"
             lblCbState.foreColor = (color 80 180 80)
