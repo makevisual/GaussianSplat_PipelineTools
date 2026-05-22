@@ -155,7 +155,7 @@ struct gspipe_plySeqEditorStruct (
         setUserProp node "gspipe_plyAnimationEnabled" true
         setUserProp node "gspipe_plySequencePath"     pathStr
         setUserProp node "gspipe_plyOffset"           0
-        setUserProp node "gspipe_plySequenceMissing"  "#none"
+        setUserProp node "gspipe_plySequenceMissing"  "#nearest"
     )
 )
 
