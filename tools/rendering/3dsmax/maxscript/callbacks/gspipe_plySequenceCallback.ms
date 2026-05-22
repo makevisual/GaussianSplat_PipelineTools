@@ -50,5 +50,5 @@ gspipe_plySequenceSceneCA = attributes gspipe_plySequenceSceneCA
     )
 )
 
-gspipe_plyCallback = gspipe_plyCallbackStruct
+gspipe_plyCallback = gspipe_plyCallbackStruct()
 gspipe_plyCallback.register()
