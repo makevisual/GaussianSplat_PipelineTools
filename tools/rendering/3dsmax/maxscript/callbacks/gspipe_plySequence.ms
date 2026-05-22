@@ -25,6 +25,23 @@ fn gspipe_lastDotPos s = (
     p
 )
 
+fn gspipe_parseInt v default:0 = (
+    -- getUserProp's auto-coercion doesn't reliably handle leading '-',
+    -- so parse the sign explicitly before delegating to `as integer`.
+    if v == undefined then default
+    else if classOf v == Integer then v
+    else if classOf v == Float   then (v as integer)
+    else (
+        local s = v as string
+        local sign = 1
+        if s.count > 0 and (substring s 1 1) == "-" do (
+            sign = -1
+            s = substring s 2 -1
+        )
+        if gspipe_isAllDigits s then (sign * (s as integer)) else default
+    )
+)
+
 fn gspipe_parsePlySeqPath path = (
     -- "C:\...\Goku.0001.ply" -> #(dir, base, padding, ext); undefined if unparseable.
     local dir  = getFilenamePath path
@@ -73,9 +90,7 @@ fn gspipe_updatePlySequences = (
              local seqPath = getUserProp n "gspipe_plySequencePath"
              if seqPath != undefined and (seqPath as string) != "" do (
                  seqPath = seqPath as string
-                 local offsetRaw = getUserProp n "gspipe_plyOffset"
-                 local offset = if offsetRaw == undefined then 0 else (offsetRaw as integer)
-                 if offset == undefined do offset = 0
+                 local offset = gspipe_parseInt (getUserProp n "gspipe_plyOffset")
 
                  local missingStr = (getUserProp n "gspipe_plySequenceMissing") as string
                  if missingStr.count > 0 and (substring missingStr 1 1) == "#" do
