@@ -118,7 +118,7 @@ struct gspipe_plyUpdateStruct (
                          local finalPath = if doesFileExist candidate then candidate
                              else if nearest then (gspipe_findNearestPly dir base padding ext target)
                              else ""
-                         format "[gspipe] %  ->  \"%\"\n" n.name finalPath
+                         format "[gspipe] %  ->  \"%\"\n" n.name finalPath quiet:quiet
                          n.file = finalPath
                      )
                  )
@@ -142,11 +142,9 @@ gspipe_plyUpdate = gspipe_plyUpdateStruct()
 ----------- Callbacks ------------
 ----------------------------------
 
--- gspipe_plySequenceCallback.ms
 -- Wires gspipe_plyUpdate.run() into 3ds Max callbacks and provides a
--- scripted custom attribute so the registration travels with the .max
--- file. Assumes gspipe_plySequence.ms has been fileIn'd first
--- (defines gspipe_plyUpdate).
+-- scripted custom attribute so the registration travels with the
+-- .max file.
 --
 -- Two callbacks are installed:
 --   #preRenderEval       - fires before the renderer evaluates objects
