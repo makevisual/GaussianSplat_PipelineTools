@@ -475,6 +475,14 @@ rollout gspipe_plySeqEditorRollout "Gspipe PLY Sequence Editor" width:760 height
         )
     )
 
+    -- ------- dotNet grid event handlers -------
+
+    on dgv CellValueChanged sender args do
+        onCellValueChanged sender args
+
+    on dgv CellDoubleClick sender args do
+        onCellDoubleClick sender args
+
     -- ------- Lifecycle -------
 
     on gspipe_plySeqEditorRollout open do (
@@ -489,8 +497,6 @@ rollout gspipe_plySeqEditorRollout "Gspipe PLY Sequence Editor" width:760 height
             dgv.SelectionMode = (dotNetClass "System.Windows.Forms.DataGridViewSelectionMode").FullRowSelect
             dgv.AutoSizeRowsMode = (dotNetClass "System.Windows.Forms.DataGridViewAutoSizeRowsMode").AllCells
             buildColumns()
-            dotNet.addEventHandler dgv "CellValueChanged" onCellValueChanged
-            dotNet.addEventHandler dgv "CellDoubleClick" onCellDoubleClick
             populateGrid()
 
             if gspipe_plySeqEditorTimeCbRef != undefined do
