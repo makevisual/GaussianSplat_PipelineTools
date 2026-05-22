@@ -27,9 +27,19 @@ User-property contract (per node):
 - [x] Rename `maxscript/rollouts/` → `maxscript/ui/`.
 - [x] Core function `gspipe_updatePlySequences` in
       `maxscript/callbacks/gspipe_plySequence.ms` (manual invocation only).
-- [ ] Wire to time-change and scene-load callbacks with safe
-      register/unregister helpers. Deferred until the core function is
-      proven by manual use — misfiring callbacks force a Max restart.
+- [x] Wire to `#timeChange` and `#preRenderFrame` via
+      `maxscript/callbacks/gspipe_plySequenceCallback.ms`. Registration
+      uses a stable id so re-loading the file cleanly replaces prior
+      handlers — no Max restart needed.
+- [x] Scripted custom attribute `gspipe_plySequenceSceneCA` in the
+      same file. Attach it to a scene helper
+      (`custAttributes.add $someHelper gspipe_plySequenceSceneCA`)
+      and save the scene; on subsequent loads, its `on load` handler
+      re-installs the callbacks.
+- [ ] Startup script under `maxscript/startup/` that fileIns both
+      `gspipe_plySequence.ms` and `gspipe_plySequenceCallback.ms`, so
+      render-farm workers have `gspipe_plyCallback` defined before
+      scenes load.
 - [ ] Macroscript wrapper for menu/toolbar invocation
       (`maxscript/macros/`).
 - [ ] Rollout UI for setting the user properties from inside Max
