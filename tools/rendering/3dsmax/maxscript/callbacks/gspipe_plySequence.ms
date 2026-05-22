@@ -118,7 +118,7 @@ struct gspipe_plyUpdateStruct (
                          local finalPath = if doesFileExist candidate then candidate
                              else if nearest then (gspipe_findNearestPly dir base padding ext target)
                              else ""
-                         format "[gspipe] %  ->  \"%\"\n" n.name finalPath quiet:quiet
+                         if gspipe_plyUpdate.quiet != true then ( format "[gspipe] %  ->  \"%\"\n" n.name finalPath ) --quiet:quiet 
                          n.file = finalPath
                      )
                  )
