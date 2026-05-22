@@ -8,7 +8,7 @@ Language split (see `CLAUDE.md` section 5):
   rollouts, startup scripts, VRay node property access. Subdirs:
   - `callbacks/` — time-change, scene-load, render pre/post callbacks.
   - `macros/` — macroscripts wired into toolbars and menus.
-  - `rollouts/` — user-facing dialog UIs.
+  - `ui/` — user-facing dialog UIs and rollout definitions.
   - `startup/` — auto-loaded scripts (drop into Max's startup folder).
 - `python/` — external orchestration: launching Max, sending jobs to
   Max, talking between Max and the rest of the pipeline. No scene
